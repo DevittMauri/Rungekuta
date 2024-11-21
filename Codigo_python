@@ -1,0 +1,39 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Parámetros del problema
+x0 = 0        # Valor inicial de x
+y0 = 1        # Valor inicial de y
+h = 0.1       # Tamaño de paso
+n_steps = 10  # Número de pasos
+f = lambda x, y: x + y  # Ecuación diferencial
+
+# Método de Runge-Kutta 4to Orden
+x_values = [x0]
+y_values = [y0]
+
+for _ in range(n_steps):
+    k1 = f(x0, y0)
+    k2 = f(x0 + h / 2, y0 + k1 * h / 2)
+    k3 = f(x0 + h / 2, y0 + k2 * h / 2)
+    k4 = f(x0 + h, y0 + k3 * h)
+    y_next = y0 + (h / 6) * (k1 + 2 * k2 + 2 * k3 + k4)
+    
+    # Actualizar valores
+    x0 += h
+    y0 = y_next
+    x_values.append(x0)
+    y_values.append(y0)
+
+# Mostrar los resultados
+for i in range(n_steps + 1):
+    print(f"x = {x_values[i]:.2f}, y = {y_values[i]:.4f}")
+
+# Graficar la solución
+plt.plot(x_values, y_values, label="Solución de Runge-Kutta 4to orden")
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('Método de Runge-Kutta 4to Orden')
+plt.legend()
+plt.grid(True)
+plt.show()
